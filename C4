@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static ConsoleApp1.Program;
+
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<INotifier> notifiers = new List<INotifier>()
+            {
+                new EmailNotifier(),
+                new SmsNotifier(),
+                new TelegramNotifier()
+            };
+            foreach (var notifier in notifiers)
+            {
+                notifier.Send("Интерфейсы — это круто!");
+            }
+        }
+        public interface INotifier
+        {
+            void Send(string message); //указан параметр
+        }
+
+        public class EmailNotifier : INotifier
+        {
+            public void Send(string message)
+            { // Реализация метода с ПАРАМЕТРОМ
+                Console.WriteLine($"Отправлено сообщение Email: {message}");//емейл
+            }
+        }
+        public class SmsNotifier : INotifier
+        {
+            public void Send(string message)
+            { // Реализация метода с ПАРАМЕТРОМ
+                Console.WriteLine($"Отправлено сообщение Sms: {message}"); //смс
+            }
+        }
+        public class TelegramNotifier : INotifier
+        {
+            public void Send(string message)
+            {
+                Console.WriteLine($"Отправлено сообщение Telegram: {message}"); //тг
+            }
+        }
+    }
+}
